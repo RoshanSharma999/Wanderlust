@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airbnb</title>
+    <style>
+        h1{
+            margin: 10px;
+        }
+        li{
+            margin: 10px;
+        }
+        a{
+            font-size: 1.3rem;
+            text-decoration: none;
+            color: black;
+        }
+        button{
+            font-size: 1.2rem;
+            margin: 0px 10px;
+        }
+    </style>
+</head>
+<body>
+    <% let i = 0 %>
+    <h1>All Listings</h1>
+    <form method="GET" action="/listings/new"><button>Add New Listing</button></form>
+    <ul>
+        <% for(data of allData){ %>
+            <li><a href="/listings/<%= data._id %>"><%= data.title %></a></li>
+            <% i++ %>
+        <% } %>
+    </ul>
+    <div>Total count: <%= i %></div>
+</body>
+</html>

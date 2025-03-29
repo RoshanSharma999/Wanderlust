@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit listing</title>
+    <style>
+        input, textarea, button, label{
+            margin: 10px;
+            font-size: 1.2rem;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit your listing</h2>
+    <form method="POST" action="/listings/<%= thisListing._id %>?_method=PATCH">
+        <label>Title: </label>
+        <input type="text" value="<%= thisListing.title %>" name="listing[title]" required autocomplete="off">
+        <br>
+        <label>Description: </label>
+        <textarea name="listing[desc]" rows="5" cols="30"><%= thisListing.desc %></textarea>
+        <br>
+        <label>Image url: </label>
+        <input type="text" value="<%= thisListing.image %>" name="listing[image]" required autocomplete="off">
+        <br>
+        <label>Price: </label>
+        <input type="number" value="<%= thisListing.price %>" name="listing[price]" required autocomplete="off">
+        <br>
+        <label>Location: </label>
+        <input type="text" value="<%= thisListing.location %>" name="listing[location]" required autocomplete="off">
+        <br>
+        <label>Country: </label>
+        <input type="text" value="<%= thisListing.country %>" name="listing[country]" required autocomplete="off">
+        <br>
+        <button>Update</button>
+    </form>
+</body>
+</html>

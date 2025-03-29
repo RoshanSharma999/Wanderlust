@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Listing</title>
+    <style>
+        input, textarea, button{
+            margin: 10px;
+            font-size: 1.2rem;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add new listing</h1>
+    <form method="POST" action="/listings">
+        <input type="text" placeholder="title" name="listing[title]" required autocomplete="off"><br>
+        <textarea name="listing[desc]" placeholder="description" rows="5" cols="30"></textarea><br>
+        <input type="text" placeholder="image url" name="listing[image]" required autocomplete="off"><br>
+        <input type="number" placeholder="price" name="listing[price]" required autocomplete="off"><br>
+        <input type="text" placeholder="location" name="listing[location]" required autocomplete="off"><br>
+        <input type="text" placeholder="country" name="listing[country]" required autocomplete="off"><br>
+        <button>Add</button>
+    </form>
+</body>
+</html>
