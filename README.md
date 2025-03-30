@@ -1,1 +1,3 @@
-# Airbnb-clone
+# Wanderlust
+
+An airbnb clone apllication
