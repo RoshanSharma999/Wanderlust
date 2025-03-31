@@ -1,0 +1,137 @@
+body {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container{
+    flex: 1;
+}
+.btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+.btn:hover{
+    opacity: 0.85;
+}
+/* navbar */
+#navbarNavAltMarkup{
+    background-color: white;
+}
+.navbar {
+    height: 5rem;
+    background-color: white;
+}
+
+.fa-compass {
+    color: #fe424d;
+    font-size: 2rem;
+    margin-left: 20px;
+}
+
+.nav-link {
+    font-size: 1.2rem !important;
+    margin-left: 20px;
+    color: black !important;
+}
+
+/* footer */
+footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px 0px;
+    background-color: #fbfbfb;
+    border-top: 1px solid rgb(199, 199, 199);
+}
+footer div{
+    margin: 5px 0px;
+}
+.fa-brands{
+    font-size: 1.5rem;
+    margin: 0px 5px;
+}
+#f-links a {
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+#f-links a:hover {
+    text-decoration: underline;
+}
+
+/* all listings container */
+h1, h2{
+    margin: 20px 0px !important;
+}
+#listing-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 12px 12px;
+}
+.card{
+    border: 1px solid grey !important;
+    border-radius: 5px !important;
+    width: 100%;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.card:hover{
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: black !important;
+}
+.card-text{
+    font-size: 1.1rem;
+}
+.card-img-top{
+    height: 18rem;
+    object-fit: cover !important;
+}
+@media(max-width: 1200px){
+    .card-img-top{
+        height: 16rem;
+    }
+}
+@media(max-width: 991px){
+    #listing-container{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media(max-width: 768px){
+    .card-img-top{
+        height: 14rem;
+    }
+}
+@media(max-width: 520px){
+    .card-img-top{
+        height: 10rem;
+    }
+}
+
+/* addNew.ejs */
+.form-control{
+    width: 95%;
+    max-width: 600px;
+    border: 1px solid grey !important;
+}
+
+/* showOne.ejs */
+#showOne img{
+    width: 90%;
+    max-width: 500px;
+    aspect-ratio: 1;
+}
+#showOne ul{
+    margin: 20px 0px;
+}
+#showOne li{
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+#showOne form{
+    display: inline-block;
+    margin: 5px;
+}

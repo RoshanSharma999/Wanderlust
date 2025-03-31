@@ -1,38 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airbnb</title>
-    <style>
-        h1{
-            margin: 10px;
-        }
-        li{
-            margin: 10px;
-        }
-        a{
-            font-size: 1.3rem;
-            text-decoration: none;
-            color: black;
-        }
-        button{
-            font-size: 1.2rem;
-            margin: 0px 10px;
-        }
-    </style>
-</head>
+<% layout("/layouts/boilerplate.ejs") %>
 <body>
-    <% let i = 0 %>
     <h1>All Listings</h1>
-    <form method="GET" action="/listings/new"><button>Add New Listing</button></form>
-    <ul>
-        <% for(data of allData){ %>
-            <li><a href="/listings/<%= data._id %>"><%= data.title %></a></li>
-            <% i++ %>
-        <% } %>
-    </ul>
-    <div>Total count: <%= i %></div>
+    <div id="listing-container">
+    <% for(data of allData){ %>
+        <a href="/listings/<%= data._id %>" style="text-decoration: none">
+        <div class="card">
+            <img src="<%= data.image %>" class="card-img-top" alt="listing_image">
+            <div class="card-body">
+                <p class="card-text">
+                <b><%= data.title %></b> <br>
+                &#8377;<%= data.price.toLocaleString("en-IN") %> / day
+                </p>
+            </div>
+        </div>
+        </a>
+    <% } %>
+    </div>
 </body>
-</html>

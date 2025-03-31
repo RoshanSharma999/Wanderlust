@@ -1,33 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listing details</title>
-    <style>
-        li{
-            font-size: 1.3rem;
-        }
-        button{
-            font-size: 1.2rem;
-            margin: 10px;
-        }
-        form{
-            display: inline-block;
-        }
-    </style>
-</head>
-<body>
+<% layout("/layouts/boilerplate.ejs") %>
+<body id="showOne">
     <h2><%= thisListing.title %></h2>
-    <img src="<%= thisListing.image %>" width="300px">
+    <img src="<%= thisListing.image %>" width="500px">
     <ul>
         <li>Description: <%= thisListing.desc %></li>
-        <li>Price: &#8377;<%= thisListing.price.toLocaleString("en-IN") %></li>
+        <li>Price: &#8377;<%= thisListing.price.toLocaleString("en-IN") %> per day</li>
         <li>Location: <%= thisListing.location %></li>
         <li>Country: <%= thisListing.country %></li>
     </ul>
-    <form method="GET" action="/listings/<%= thisListing._id %>/edit"><button>Edit</button></form>
-    <form method="POST" action="/listings/<%= thisListing._id %>?_method=DELETE"><button>Delete</button></form>
-    <form action="/listings"><button>Back to Listings</button></form>
+    <form method="GET" action="/listings/<%= thisListing._id %>/edit"><button class="btn btn-dark">Edit</button></form>
+    <form method="POST" action="/listings/<%= thisListing._id %>?_method=DELETE"><button class="btn btn-dark">Delete</button></form>
 </body>
-</html>
