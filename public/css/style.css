@@ -14,6 +14,7 @@ body {
 .btn:hover{
     opacity: 0.85;
 }
+
 /* navbar */
 #navbarNavAltMarkup{
     background-color: white;
@@ -25,8 +26,9 @@ body {
 
 .fa-compass {
     color: #fe424d;
-    font-size: 2rem;
+    font-size: 1.6rem;
     margin-left: 20px;
+    letter-spacing: 2px;
 }
 
 .nav-link {
@@ -76,10 +78,11 @@ h1, h2{
     border: 1px solid grey !important;
     border-radius: 5px !important;
     width: 100%;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 .card:hover{
     transform: scale(1.02);
+    z-index: 1;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     border-color: black !important;
 }
@@ -111,13 +114,6 @@ h1, h2{
     }
 }
 
-/* addNew.ejs */
-.form-control{
-    width: 95%;
-    max-width: 600px;
-    border: 1px solid grey !important;
-}
-
 /* showOne.ejs */
 #showOne img{
     width: 90%;
@@ -134,4 +130,8 @@ h1, h2{
 #showOne form{
     display: inline-block;
     margin: 5px;
+}
+.delete{
+    color: white !important;
+    background-color: black !important;
 }

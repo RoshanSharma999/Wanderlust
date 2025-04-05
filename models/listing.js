@@ -10,9 +10,18 @@ const listingSchema = new mongoose.Schema({
         type: String,
         default: "/images/default.jpg"
     },
-    price: Number,
-    location: String,
-    country: String,
+    price: {
+        type: Number,
+        required: true
+    },
+    location: {
+        type: String,
+        required: true
+    },
+    country: {
+        type: String,
+        required: true
+    }
 });
 
 const listing = mongoose.model("listing", listingSchema);

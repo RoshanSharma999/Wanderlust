@@ -3,7 +3,9 @@ const mOver = require("method-override");
 const ejsMate = require("ejs-mate");
 const mongoose = require('mongoose');
 const path = require("path");
-const listing = require('./models/listing.js');
+const listing = require("./models/listing.js");
+const asyncWrap = require("./utils/warpAsync.js");
+const exprsError = require("./utils/exprsError.js");
 const app = express();
 const port = 8080;
 
@@ -33,65 +35,74 @@ app.get("/", (req, res) => {
 });
 
 // all the listings
-app.get("/listings", async (req, res) => {
+app.get("/listings", asyncWrap(async (req, res) => {
     console.log("Request on all listings");
     let allData = await listing.find();
     res.render("listings/home.ejs", { allData });
-});
+}));
 
 // to add a new listing
 app.get("/listings/new", (req, res) => {
     console.log("Request to add new listing");
     res.render("listings/addNew.ejs");
 });
-app.post("/listings", async (req, res) => {
+app.post("/listings", asyncWrap(async (req, res) => {
     let newListing = new listing(req.body.listing);
     await newListing.save();
     console.log("New listing saved successfully");
     res.redirect("/listings");
-});
+}));
 
 // show a particular listings
-app.get("/listings/:id", async (req, res) => {
+app.get("/listings/:id", asyncWrap(async (req, res) => {
     let { id } = req.params;
     let thisListing = await listing.findById(id);
     console.log("Request to show [", thisListing.title, "]");
     res.render("listings/showOne.ejs", { thisListing });
-});
+}));
 
 // edit a listing
-app.get("/listings/:id/edit", async (req, res) => {
+app.get("/listings/:id/edit", asyncWrap(async (req, res) => {
     let { id } = req.params;
     let thisListing = await listing.findById(id);
     console.log("Request to edit [", thisListing.title, "]");
     res.render("listings/edit.ejs", { thisListing });
-});
-app.patch("/listings/:id", async (req, res) => {
+}));
+app.patch("/listings/:id", asyncWrap(async (req, res) => {
+    if(!req.body.listing) throw new exprsError(400, "Send valid data for listing");
     let { id } = req.params;
     let updatedListing = req.body.listing;
     await listing.findByIdAndUpdate(id, updatedListing, { runValidators: true });
     console.log("Listing updated successfully");
     let thisListing = await listing.findById(id);
     res.render("listings/showOne.ejs", { thisListing });
-});
+}));
 
 // delete a listing
-app.delete("/listings/:id", async (req, res) => {
+app.delete("/listings/:id", asyncWrap(async (req, res) => {
     let { id } = req.params;
     let thisListing = await listing.findById(id);
     console.log("Deleted [", thisListing.title, "]");
     await listing.findByIdAndDelete(id);
     res.redirect("/listings");
-});
-
+}));
 
 //fun
 app.get("/privacy", (req, res) => {
-    res.send("<h2>WE GIVE NO PRIVACY TO OUR USERS, WE STEAL ALL UR DATA</h2>");
+    res.send("<h2>Privacy? In this era of Internet? Nah, we sold your data to advertisers.</h2>");
 });
 app.get("/terms", (req, res) => {
-    res.send("<h2>WE KEEP CHANGING OUR TERMS</h2>");
+    res.send("<h2>We keep changing our temrs</h2>");
 });
-app.get("*", (req, res) => {
-    res.send("Error 404 | Page not found");
+
+// 404 - page not found
+app.all("*", (req, res, next) => {
+    throw new exprsError(404, "Page not found");
+});
+
+// error handling
+app.use((err, req, res, next) => {
+    let {status = 500, message = "Some Unknown Error Occurred!"} = err;
+    console.log("Error:", message);
+    res.status(status).render("error.ejs", {message});
 });

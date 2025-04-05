@@ -1,31 +1,41 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
-    <h1>Add new listing</h1>
-    <form method="POST" action="/listings">
+    <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+    <h2>Add new listing</h2>
+    <form method="POST" action="/listings" novalidate class="needs-validation">
         <div class="mb-3">
             <label class="form-label">Title</label>
             <input type="text" placeholder="title" name="listing[title]" required autocomplete="off" class="form-control">
+            <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
             <label class="form-label">Description</label>
             <textarea name="listing[desc]" placeholder="description" rows="5" cols="30" required class="form-control"></textarea>
+            <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
             <label class="form-label">Image</label>
-            <input type="text" placeholder="image url" name="listing[image]" required autocomplete="off" class="form-control">
+            <input type="text" placeholder="image url" name="listing[image]" autocomplete="off" class="form-control">
+            <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
             <label class="form-label">Price</label>
             <input type="number" placeholder="price per day" name="listing[price]" required autocomplete="off" class="form-control">
+            <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
             <label class="form-label">Location</label>
             <input type="text" placeholder="location" name="listing[location]" required autocomplete="off" class="form-control">
+            <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
             <label class="form-label">Country</label>
             <input type="text" placeholder="country" name="listing[country]" required autocomplete="off" class="form-control">
+            <div class="invalid-feedback">Required</div>
         </div>
         <button class="btn btn-dark">Add</button>
     </form>
+    </div>
+    </div>
 </body>
