@@ -5,32 +5,32 @@
     <h2>Edit your listing</h2>
     <form method="POST" action="/listings/<%= thisListing._id %>?_method=PATCH" novalidate class="needs-validation">
         <div class="mb-3">
-            <label class="form-label">Title: </label>
+            <label class="form-label">Title</label>
             <input type="text" value="<%= thisListing.title %>" name="listing[title]" required autocomplete="off" class="form-control">
             <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
-            <label class="form-label">Description: </label>
+            <label class="form-label">Description</label>
             <textarea name="listing[desc]" rows="5" cols="30" required class="form-control"><%= thisListing.desc %></textarea>
             <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
-            <label class="form-label">Image url: </label>
+            <label class="form-label">Image url</label>
             <input type="text" value="<%= thisListing.image %>" name="listing[image]" required autocomplete="off" class="form-control">
             <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
-            <label class="form-label">Price: </label>
-            <input type="number" value="<%= thisListing.price %>" name="listing[price]" required autocomplete="off" class="form-control">
+            <label class="form-label">Price</label>
+            <input type="number" min="0" value="<%= thisListing.price %>" name="listing[price]" required autocomplete="off" class="form-control">
             <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
-            <label class="form-label">Location: </label>
+            <label class="form-label">Location</label>
             <input type="text" value="<%= thisListing.location %>" name="listing[location]" required autocomplete="off" class="form-control">
             <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
-            <label class="form-label">Country: </label>
+            <label class="form-label">Country</label>
             <input type="text" value="<%= thisListing.country %>" name="listing[country]" required autocomplete="off" class="form-control">
             <div class="invalid-feedback">Required</div>
         </div>

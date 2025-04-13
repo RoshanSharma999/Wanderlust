@@ -6,6 +6,8 @@ const path = require("path");
 const listing = require("./models/listing.js");
 const asyncWrap = require("./utils/warpAsync.js");
 const exprsError = require("./utils/exprsError.js");
+const {listingSchema} = require("./schema.js");
+const ExprsError = require("./utils/exprsError.js");
 const app = express();
 const port = 8080;
 
@@ -29,6 +31,16 @@ app.listen(port, () => {
     console.log("http://localhost:8080");
 });
 
+// function to validate listing using joi
+const validateListing = (req, res, next) => {
+    let {error} = listingSchema.validate(req.body);
+    if(error){
+        let errMsg = error.details.map((ele) => ele.message).join(",");
+        throw new ExprsError(400, errMsg);
+    }
+    else return next();
+}
+
 app.get("/", (req, res) => {
     console.log("Reqest on home page");
     res.send("<h1>Welcome to Wanderlust</h1><p>Please go to /listings</p>");
@@ -46,7 +58,7 @@ app.get("/listings/new", (req, res) => {
     console.log("Request to add new listing");
     res.render("listings/addNew.ejs");
 });
-app.post("/listings", asyncWrap(async (req, res) => {
+app.post("/listings", validateListing, asyncWrap(async (req, res) => {
     let newListing = new listing(req.body.listing);
     await newListing.save();
     console.log("New listing saved successfully");
@@ -68,7 +80,7 @@ app.get("/listings/:id/edit", asyncWrap(async (req, res) => {
     console.log("Request to edit [", thisListing.title, "]");
     res.render("listings/edit.ejs", { thisListing });
 }));
-app.patch("/listings/:id", asyncWrap(async (req, res) => {
+app.patch("/listings/:id", validateListing, asyncWrap(async (req, res) => {
     if(!req.body.listing) throw new exprsError(400, "Send valid data for listing");
     let { id } = req.params;
     let updatedListing = req.body.listing;

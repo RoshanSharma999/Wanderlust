@@ -259,7 +259,15 @@ const sampleListings = [
       price: 1800,
       location: "Costa Rica",
       country: "Costa Rica",
-    },
+    },{
+      title: "Mont Saint Micheal",
+      desc:
+        "a stunning island commune in Normandy, France, known for its medieval architecture and dramatic tides.",
+      image: "https://upload.wikimedia.org/wikipedia/commons/7/78/Mont-Saint-Michel_vu_du_ciel.jpg",
+      price: 3400,
+      location: "Normandy",
+      country: "France",
+    }
   ];
   
   module.exports = { data: sampleListings };
