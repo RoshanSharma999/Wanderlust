@@ -66,7 +66,7 @@ const sampleListings = [
       title: "Luxury Penthouse with City Views",
       desc:
         "Indulge in luxury living with panoramic city views from this stunning penthouse apartment.",
-      image: "https://images.unsplash.com/photo-1622396481328-9b1b78cdd9fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2t5JTIwdmFjYXRpb258ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      image: "https://images.stockcake.com/public/b/e/b/beb0bbfe-ed8b-4e22-b19e-d7e5cf42cc75_large/luxurious-penthouse-interior-stockcake.jpg",
       price: 3500,
       location: "Los Angeles",
       country: "United States",

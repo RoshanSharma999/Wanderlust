@@ -1,17 +1,19 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body id="showOne">
-    <div class="row justify-content-center">
-    <div class="col-12 col-lg-8">
     <h2><%= thisListing.title %></h2>
-    <img src="<%= thisListing.image %>" width="500px">
-    <ul>
-        <li>Description: <%= thisListing.desc %></li>
-        <li>Price: &#8377;<%= thisListing.price.toLocaleString("en-IN") %> per day</li>
-        <li>Location: <%= thisListing.location %></li>
-        <li>Country: <%= thisListing.country %></li>
-    </ul>
-    <form method="GET" action="/listings/<%= thisListing._id %>/edit"><button class="btn btn-dark">Edit</button></form>
-    <form method="POST" action="/listings/<%= thisListing._id %>?_method=DELETE"><button class="btn btn-dark delete">Delete</button></form>
-    </div>
+    <div class="details">
+        <div class="img-cont">
+            <img src="<%= thisListing.image %>" width="500px">
+        </div>
+        <div>
+            <ul>
+                <li>Description: <%= thisListing.desc %></li>
+                <li>Price: &#8377;<%= thisListing.price.toLocaleString("en-IN") %> per day</li>
+                <li>Location: <%= thisListing.location %></li>
+                <li>Country: <%= thisListing.country %></li>
+            </ul>
+            <form method="GET" action="/listings/<%= thisListing._id %>/edit"><button class="btn btn-dark">Edit</button></form>
+            <form method="POST" action="/listings/<%= thisListing._id %>?_method=DELETE"><button class="btn btn-dark delete">Delete</button></form>
+        </div>
     </div>
 </body>
