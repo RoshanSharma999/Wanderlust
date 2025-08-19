@@ -4,15 +4,11 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+textarea{
+    resize: none;
+}
 .container{
     flex: 1;
-}
-.btn{
-    background-color: #fe424d !important;
-    border: none !important;
-}
-.btn:hover{
-    opacity: 0.85;
 }
 
 /* navbar */
@@ -146,7 +142,12 @@ h1, h2{
     display: inline-block;
     margin: 5px;
 }
-.delete{
-    color: white !important;
-    background-color: black !important;
+.rev-card{
+    border: 1px solid rgb(198, 198, 198);
+    border-radius: 8px;
+}
+.review-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 8px;
 }
