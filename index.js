@@ -3,12 +3,12 @@ const mOver = require("method-override");
 const ejsMate = require("ejs-mate");
 const mongoose = require('mongoose');
 const path = require("path");
-const listing = require("./models/listing.js");
-const review = require("./models/review.js");
-const asyncWrap = require("./utils/warpAsync.js");
+
+const router = express.Router();
 const exprsError = require("./utils/exprsError.js");
-const { listingSchema, reviewSchema } = require("./schema.js");
-const ExprsError = require("./utils/exprsError.js");
+const listings = require("./routes/lisitng.js");
+const reviews = require("./routes/review.js");
+
 const app = express();
 const port = 8080;
 
@@ -27,92 +27,12 @@ main()
 .then(() => console.log("Connected to DB"))
 .catch(err => console.log(err));
 
-// function to validate listing using joi
-const validateListing = (req, res, next) => {
-    let {error} = listingSchema.validate(req.body);
-    if(error){
-        let errMsg = error.details.map((ele) => ele.message).join(",");
-        throw new ExprsError(400, errMsg);
-    }
-    else return next();
-}
-
-const validateReview = (req, res, next) => {
-    let {error} = reviewSchema.validate(req.body);
-    if(error){
-        let errMsg = error.details.map((ele) => ele.message).join(",");
-        throw new ExprsError(400, errMsg);
-    }
-    else return next();
-}
-
 app.get("/", (req, res) => {
     res.send("<h1>Welcome to Wanderlust</h1><p>Please go to <a href='http://localhost:8080/listings'>listings<a></p>");
 });
 
-// all the listings
-app.get("/listings", asyncWrap(async (req, res) => {
-    let allData = await listing.find();
-    res.render("listings/home.ejs", { allData });
-}));
-
-// to add a new listing
-app.get("/listings/new", (req, res) => {
-    res.render("listings/addNew.ejs");
-});
-app.post("/listings", validateListing, asyncWrap(async (req, res) => {
-    let newListing = new listing(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings");
-}));
-
-// show a particular listings
-app.get("/listings/:id", asyncWrap(async (req, res) => {
-    let { id } = req.params;
-    let thisListing = await listing.findById(id).populate("reviews");
-    res.render("listings/showOne.ejs", { thisListing });
-}));
-
-// edit a listing
-app.get("/listings/:id/edit", asyncWrap(async (req, res) => {
-    let { id } = req.params;
-    let thisListing = await listing.findById(id);
-    res.render("listings/edit.ejs", { thisListing });
-}));
-app.patch("/listings/:id", validateListing, asyncWrap(async (req, res) => {
-    if(!req.body.listing) throw new exprsError(400, "Send valid data for listing");
-    let { id } = req.params;
-    let updatedListing = req.body.listing;
-    await listing.findByIdAndUpdate(id, updatedListing, { runValidators: true });
-    let thisListing = await listing.findById(id);
-    res.render("listings/showOne.ejs", { thisListing });
-}));
-
-// delete a listing
-app.delete("/listings/:id", asyncWrap(async (req, res) => {
-    let { id } = req.params;
-    let thisListing = await listing.findById(id);
-    await listing.findByIdAndDelete(id);
-    res.redirect("/listings");
-}));
-
-// adding a review
-app.post("/listings/:id/reviews", validateReview, asyncWrap(async (req, res) => {
-    let thisListing = await listing.findById(req.params.id);
-    let newReview = new review(req.body.review);
-    thisListing.reviews.push(newReview);
-    await newReview.save();
-    await thisListing.save();
-    res.redirect(`/listings/${req.params.id}`);
-}));
-
-// deleting a review
-app.delete("/listings/:id/reviews/:revId", asyncWrap(async (req, res) => {
-    let {id, revId} = req.params;
-    await listing.findByIdAndUpdate(id, {$pull: {reviews: revId}});
-    await review.findByIdAndDelete(revId);
-    res.redirect(`/listings/${req.params.id}`);
-})); 
+app.use("/listings", listings);
+app.use("/listings/:id/reviews", reviews);
 
 // fun
 app.get("/privacy", (req, res) => {
