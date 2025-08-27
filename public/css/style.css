@@ -129,6 +129,7 @@ h1, h2{
 }
 #showOne img{
     width: 95%;
+    max-height: 60vh;
 }
 #showOne ul{
     margin: 20px 0px;
@@ -149,4 +150,19 @@ h1, h2{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 8px;
+}
+.rev-rating-username{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.rev-label-rating{
+    display: flex;
+    justify-content: space-between;
+
+}
+@media(max-width: 991px){
+    .review-container{
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

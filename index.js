@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV != "production"){
+    require("dotenv").config();
+}
 const express = require("express");
 const mOver = require("method-override");
 const ejsMate = require("ejs-mate");
@@ -11,7 +14,7 @@ const localStrategy = require('passport-local');
 
 const router = express.Router();
 const exprsError = require("./utils/exprsError.js");
-const listingRouter = require("./routes/lisitng.js");
+const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const user = require("./models/user.js");
@@ -66,15 +69,6 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
-// temporary
-app.get("/details", (req, res) => {
-    if(req.user){
-        res.send(req.user);
-    } else {
-        res.send("Please log in first!");
-    }
-});
-
 // fun
 app.get("/privacy", (req, res) => {
     res.send("<h2>Privacy? Nah, we sold your data to advertisers.</h2>");
@@ -84,9 +78,9 @@ app.get("/terms", (req, res) => {
 });
 
 // 404 - page not found
-app.all("*", (req, res, next) => {
-    throw new exprsError(404, "Page not found");
-});
+// app.all("*", (req, res, next) => {
+//     throw new exprsError(404, "Page not found");
+// });
 
 // error handling
 app.use((err, req, res, next) => {

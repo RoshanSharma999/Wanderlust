@@ -8,7 +8,8 @@ const listingSchema = new mongoose.Schema({
     },
     desc: String,
     image: {
-        type: String
+        url: String,
+        filename: String
     },
     price: {
         type: Number,

@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
     <div class="col-12 col-lg-8">
     <h2>Add new listing</h2>
-    <form method="POST" action="/listings" novalidate class="needs-validation">
+    <form method="POST" action="/listings" novalidate class="needs-validation show-loader" enctype="multipart/form-data">
         <div class="mb-3">
             <label class="form-label">Title</label>
             <input type="text" name="listing[title]" required autocomplete="off" class="form-control">
@@ -15,8 +15,8 @@
             <div class="invalid-feedback">Required</div>
         </div>
         <div class="mb-3">
-            <label class="form-label">Image</label>
-            <input type="text" placeholder="image url" name="listing[image]" autocomplete="off" class="form-control">
+            <label class="form-label">Upload image</label>
+            <input type="file" accept="image/png, image/jpeg" name="listing[image]" required autocomplete="off" class="form-control">
         </div>
         <div class="mb-3">
             <label class="form-label">Price</label>
