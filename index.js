@@ -2,12 +2,19 @@ const express = require("express");
 const mOver = require("method-override");
 const ejsMate = require("ejs-mate");
 const mongoose = require('mongoose');
-const path = require("path");
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
+const path = require('path');
+const passport = require('passport');
+const localStrategy = require('passport-local');
 
 const router = express.Router();
 const exprsError = require("./utils/exprsError.js");
-const listings = require("./routes/lisitng.js");
-const reviews = require("./routes/review.js");
+const listingRouter = require("./routes/lisitng.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
+const user = require("./models/user.js");
 
 const app = express();
 const port = 8080;
@@ -27,12 +34,46 @@ main()
 .then(() => console.log("Connected to DB"))
 .catch(err => console.log(err));
 
+app.use(session({
+    secret: 'mysecretstring',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 3600 * 1000,
+        maxAge: 7 * 24 * 3600 * 1000,
+        httpOnly: true 
+    }
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(user.authenticate()));
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser());
+
+app.use((req, res, next) => {
+    res.locals.successMsg = req.flash("success");
+    res.locals.errorMsg = req.flash("error");
+    res.locals.currUser = req.user;
+    return next();
+});
+
 app.get("/", (req, res) => {
     res.send("<h1>Welcome to Wanderlust</h1><p>Please go to <a href='http://localhost:8080/listings'>listings<a></p>");
 });
 
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
+
+// temporary
+app.get("/details", (req, res) => {
+    if(req.user){
+        res.send(req.user);
+    } else {
+        res.send("Please log in first!");
+    }
+});
 
 // fun
 app.get("/privacy", (req, res) => {

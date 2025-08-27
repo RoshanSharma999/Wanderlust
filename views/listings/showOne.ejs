@@ -4,6 +4,7 @@
     <div class="details">
         <div class="img-cont">
             <img src="<%= thisListing.image %>" width="500px">
+            <p class="mt-1"> Owned by: <%= thisListing.owner.username %></p>
         </div>
         <div>
             <ul>
@@ -12,8 +13,11 @@
                 <li>Location: <%= thisListing.location %></li>
                 <li>Country: <%= thisListing.country %></li>
             </ul>
+            <% if(currUser && currUser._id.equals(thisListing.owner._id)){ %>
             <form method="GET" action="/listings/<%= thisListing._id %>/edit"><button class="btn btn-danger">Edit</button></form>
             <form method="POST" action="/listings/<%= thisListing._id %>?_method=DELETE"><button class="btn btn-dark">Delete</button></form>
+            <% } %>
+            <% if(currUser){ %>
             <hr>
             <div>
                 <h5>Leave a Review</h5>
@@ -30,6 +34,7 @@
                     <button class="btn btn-outline-dark mt-2 mb-3">Submit</button>
                 </form>
             </div>
+            <% } %>
         </div>
     </div>
     <hr>
@@ -41,14 +46,16 @@
         <% for(review of thisListing.reviews){ %>
             <div class="card">
             <div class="card-body rev-card">
+                <h6>@<%= review.author.username %></h6>
                 <b><%= review.rating %></b> Stars <br> <%= review.comment %> <br>
+                <% if(review.author._id.equals(currUser._id)){ %>
                 <form method="POST" action="/listings/<%= thisListing._id %>/reviews/<%= review._id %>?_method=DELETE">
                     <button class="btn btn-sm btn-outline-dark">Delete</button>
                 </form>
+                <% } %>
             </div>
             </div>
         <% } %>
     </div>
     <% } %>
-
 </body>

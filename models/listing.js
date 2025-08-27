@@ -8,8 +8,7 @@ const listingSchema = new mongoose.Schema({
     },
     desc: String,
     image: {
-        type: String,
-        default: "/images/default.jpg"
+        type: String
     },
     price: {
         type: Number,
@@ -28,7 +27,11 @@ const listingSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'review'
         }
-    ]
+    ],
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    }
 });
 
 listingSchema.post("findOneAndDelete", async (listing) => {
